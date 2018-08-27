@@ -1,2 +1,3 @@
 # icmd3e
-Introduction to Composite Materials Design 3rd ed. ISBN 978-1-138-19680-3
+This depo contains public files such as examples coded using Scilab, carpert plost, etc., also available in http://barbero.cadec-online.com/icmd supporting the textbook.
+
