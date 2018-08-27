@@ -1,0 +1,49 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\input{../../../formatting3e}
+
+\begin{document}
+\verbatimfont{\small}
+
+\section*{Example 1.3}
+Consider the experimental observations of strength reported in Table \ref{Table:Ex:1:3} (p.~\pageref{Table:Ex:1:3}). Sort the
+data into n=7 bins of equal width $\Delta S$ to cover the entire range of the data.  Build a histogram reporting  the number of observations per bin. Compute the mean $\mu_F$, standard deviation $\varpi_F$, and coefficient of variance $C_F$. Plot the normal probability density function $p(F)$ together with the normalized histogram. The histogram has to be normalized for plotting together with the probability density, which has area $A=1$. 
+
+\subsection*{Solution}
+The data $\bf F$ is sorted, then grouped into $n=7$ bins of equal width in Table \ref{Table:Ex:1:3} (Histogram).  Since the minimum strength is $F_{min}=30\;MPa$ and the maximum is $F_{max}=100\;MPa$, using 7 bins yield bins of with 10. 
+
+The data is represented by a normal distribution with $\mu_F=65.4, \varpi_F=14.47, C_F=0.22$. The resulting histogram and PDF are shown in Figure \ref{Figure:1:Histogram}. 
+
+%Hint: in MATLAB \verb+pdf('norm',x,m,v)+ evaluates the normal PDF $p(x)$ with mean \verb+m+ and standard deviation \verb+v+. Then, \verb+[Hist,Centers]=hist(F,7)+ returns the frequency and centers, and \verb+bar(Centers,Hist)+ plots the histogram.
+
+\begin{verbatim}
+% Example 1.3
+clc; clear
+[F txt] = xlsread('Table1_1.xlsx') % read data
+ndata = length(F) % number of data points
+% Histogram
+n = 7; % number of bins
+[Hist,centers] = hist(F,n)
+binwidth = (max(F)-min(F))/n;
+NHist = Hist/(ndata*binwidth); % normalizes the histogram 
+bar(centers,NHist,'FaceColor','none','LineWidth',2); hold on
+% probability density
+F = sort(F); % sort for plotting a line
+m = mean(F)
+v = std(F)
+p = pdf('norm',F,m,v)
+plot(F,p,'k','LineWidth',2);
+% labels
+xlabel('Strength F','FontSize',14,'FontName','Arial'); 
+ylabel('Probability p(F)','FontSize',14,'FontName','Arial');
+axis([30 100 0.0 0.04]);
+set(gca,'FontSize',14,'FontName','Arial'); 
+legend('Histogram','PDF');
+saveas(gca,'./Histogram.example.1.3','png');
+hold off
+\end{verbatim}
+\end{document}
